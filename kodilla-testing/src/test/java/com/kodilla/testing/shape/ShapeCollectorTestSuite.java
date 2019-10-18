@@ -21,7 +21,7 @@ public class ShapeCollectorTestSuite {
     @Before
     public void beforeEveryTest() {
         testCounter++;
-        System.out.println("Preparing to execute test #" + testCounter);
+        System.out.println("Test #" + testCounter);
     }
 
     //Test 1: sprawdzający, czy figura została dodana.
@@ -37,6 +37,8 @@ public class ShapeCollectorTestSuite {
 
         //Then
         Assert.assertEquals(shape, actualShape);
+
+        System.out.println("Figure addition test");
     }
 
     //Test 2: sprawdzający, czy figura została usunięta.
@@ -44,7 +46,7 @@ public class ShapeCollectorTestSuite {
     public void testRemoveFigure() {
         //Given
         Shape shape = new Triangle(5.0, 7.0);
-        Shape shape2 = new Square(6);
+        Shape shape2 = new Square(6.0);
 
         //When
         ShapeCollector shapeCollector = new ShapeCollector();
@@ -55,6 +57,9 @@ public class ShapeCollectorTestSuite {
 
         //Then
         Assert.assertEquals(1, actualShapes.size());
+
+        System.out.println("Figure removal test");
+
     }
 
     //Test 3: sprawdzający, czy metoda pobiera figurę
@@ -72,6 +77,9 @@ public class ShapeCollectorTestSuite {
 
         //Then
         Assert.assertEquals(shape, actualShape);
+
+        System.out.println("Figure get test");
+
     }
 
     //Test 4: sprawdzający czy metoda pokazuje liste figur
@@ -88,6 +96,8 @@ public class ShapeCollectorTestSuite {
         List<Shape> actualShapes = shapeCollector.showFigures();
 
         //Then
-        Assert.assertEquals(shape, actualShapes);
+        Assert.assertEquals(shapes, actualShapes);
+
+        System.out.println("Figure list display test");
     }
 }
