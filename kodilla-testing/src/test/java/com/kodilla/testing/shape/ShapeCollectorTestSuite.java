@@ -57,6 +57,7 @@ public class ShapeCollectorTestSuite {
 
         //Then
         Assert.assertEquals(1, actualShapes.size());
+        Assert.assertEquals(shape2, actualShapes.get(0));
 
         System.out.println("Figure removal test");
 
