@@ -75,8 +75,7 @@ public class BookDirectoryTestSuite {
         LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
         BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
         List<Book> resultListOf10Books = generateListOfNBooks(10);
-        when(libraryDatabaseMock.listBooksWithCondition(anyString()))
-                .thenReturn(resultListOf10Books);
+        when(libraryDatabaseMock.listBooksWithCondition(anyString())).thenReturn(resultListOf10Books);
 
         // When
         List<Book> theListOfBooks10 = bookLibrary.listBooksWithCondition("An");
@@ -85,4 +84,67 @@ public class BookDirectoryTestSuite {
         Assert.assertEquals(0, theListOfBooks10.size());
         verify(libraryDatabaseMock, times(0)).listBooksWithCondition(anyString());
     }
+
+    //Test przypadku, gdy użytkownik nie ma wypożyczonych żadnych książek,
+    @Test
+    public void testListBooksInHandsOfWhenUserDoesntHaveBooks(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser libraryUser = new LibraryUser("Tom", "Jones", "12345612345");
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(new ArrayList<>());
+
+        //When
+        List<Book> actualBooks = bookLibrary.listBooksInHandsOf(libraryUser);
+
+        //Then
+        Assert.assertEquals(0, actualBooks.size());
+        verify(libraryDatabaseMock, times(1)).listBooksInHandsOf(libraryUser);
+    }
+
+    //Test przypadku, gdy użytkownik ma 1 wypożyczoną książkę,
+    @Test
+    public void testListBooksInHandsOfWhenUserHasOneBook(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser libraryUser = new LibraryUser("Tom", "Jones", "12345612345");
+        List<Book> books = new ArrayList<>();
+        books.add(new Book("Secrets of Alamo", "John Smith", 2008));
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(books);
+
+
+        //When
+        List<Book> actualBooks = bookLibrary.listBooksInHandsOf(libraryUser);
+
+        //Then
+        Assert.assertEquals(1, actualBooks.size());
+        verify(libraryDatabaseMock, times(1)).listBooksInHandsOf(libraryUser);
+    }
+
+    //Test przypadku, gdy użytkownik ma 5 wypożyczonych książek,
+    @Test
+    public void testListBooksInHandsOfWhenUserHasFiveBooks(){
+        //Given
+        LibraryDatabase libraryDatabaseMock = mock(LibraryDatabase.class);
+        BookLibrary bookLibrary = new BookLibrary(libraryDatabaseMock);
+        LibraryUser libraryUser = new LibraryUser("Tom", "Jones", "12345612345");
+        List<Book> books = new ArrayList<>();
+        books.add(new Book("Secrets of Alamo1", "John Smith1", 2008));
+        books.add(new Book("Secrets of Alamo2", "John Smith2", 2009));
+        books.add(new Book("Secrets of Alamo3", "John Smith3", 2004));
+        books.add(new Book("Secrets of Alamo4", "John Smith4", 2003));
+        books.add(new Book("Secrets of Alamo5", "John Smith5", 2002));
+        when(libraryDatabaseMock.listBooksInHandsOf(libraryUser)).thenReturn(books);
+
+
+        //When
+        List<Book> actualBooks = bookLibrary.listBooksInHandsOf(libraryUser);
+
+        //Then
+        Assert.assertEquals(5, actualBooks.size());
+        verify(libraryDatabaseMock, times(1)).listBooksInHandsOf(libraryUser);
+    }
 }
+
+

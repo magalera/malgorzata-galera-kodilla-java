@@ -21,5 +21,12 @@ public class BookLibrary {
         }
         return resultList;
     }
+
+    public List<Book> listBooksInHandsOf(LibraryUser libraryUser){
+        List<Book> books = new ArrayList<>();
+        books.add(new Book("", "", 2000));
+        books.add(new Book(" ", " ", 2010));
+        return books;
+    }
 }
 
