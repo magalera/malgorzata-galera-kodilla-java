@@ -6,7 +6,6 @@ import org.junit.Test;
 public class ArrayOperationsTestSuite {
     @Test
     public void testGetAverage() {
-        
         //Given
         double sum = 0;
         int[] numbers = new int[20];
@@ -32,16 +31,11 @@ public class ArrayOperationsTestSuite {
         numbers[18] = 124;
         numbers[19] = 25;
 
-        for (int number : numbers) {
-            sum = sum + number;
-        }
-
         //When
         double average = ArrayOperations.getAverage(numbers);
 
         //Then
-        Assert.assertEquals(sum / numbers.length, average, 0.01);
-        System.out.println(average);
+        Assert.assertEquals(23.55, average, 0.01);
     }
 }
 
