@@ -2,17 +2,18 @@ package com.kodilla.spring.library;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 @Configuration
 public class LibraryConfig {
 
     @Bean
-    public Library library(){
+    public Library library() {
         return new Library(libraryDbController());
     }
 
     @Bean
-    public LibraryDbController libraryDbController(){
+    public LibraryDbController libraryDbController() {
         return new LibraryDbController();
     }
 }
