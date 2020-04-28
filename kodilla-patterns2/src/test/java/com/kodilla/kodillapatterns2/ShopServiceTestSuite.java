@@ -5,6 +5,7 @@ import com.kodilla.kodillapatterns2.facade.api.ItemDto;
 import com.kodilla.kodillapatterns2.facade.api.OrderDto;
 import com.kodilla.kodillapatterns2.facade.api.OrderFacade;
 import com.kodilla.kodillapatterns2.facade.api.OrderProcessingException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class ShopServiceTestSuite {
     @Autowired
     private ShopService shopService;
