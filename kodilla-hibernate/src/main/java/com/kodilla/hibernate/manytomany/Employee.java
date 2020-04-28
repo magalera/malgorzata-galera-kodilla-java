@@ -10,6 +10,10 @@ import java.util.List;
                 name = "Employee.retrieveEmployeesWithFirstName",
                 query = "FROM Employee where firstname = :FIRST_NAME"
         ),
+        @NamedQuery(
+                name = "Employee.retrieveWhereLastNameContains",
+                query = "FROM Employee WHERE lastname LIKE :LASTNAME"
+        )
 })
 @Entity
 @Table(name = "EMPLOYEES")

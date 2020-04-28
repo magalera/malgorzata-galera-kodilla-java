@@ -110,4 +110,53 @@ public class CompanyDaoTestSuite {
             //do nothing
         }
     }
+
+    @Test
+    public void testRetrieveWhereNameContains() {
+        //Given
+        Company company1 = new Company("VirtusLab");
+        Company company2 = new Company("Britenet");
+
+        //When
+        companyDao.save(company1);
+        companyDao.save(company2);
+
+        //Then
+        List<Company> companies = companyDao.retrieveNameWhereNameContains("%t%");
+        Assert.assertEquals(2, companies.size());
+
+        //CleanUp
+        try {
+            companyDao.deleteById(company1.getId());
+            companyDao.deleteById(company2.getId());
+        } catch (Exception e) {
+            //do nothing
+        }
+    }
+
+    @Test
+    public void testRetrieveWhereLastNameContains() {
+        //Given
+        Employee employee1 = new Employee("John", "Travolta");
+        Employee employee2 = new Employee("Steven", "Tyler");
+
+        //When
+        employeeDao.save(employee1);
+        employeeDao.save(employee2);
+
+        //Then
+        List<Employee> employees = employeeDao.retrieveWhereLastNameContains("%Ty%");
+        Assert.assertEquals(1, employees.size());
+
+        //CleanUp
+        try {
+            employeeDao.deleteById(employee1.getId());
+            employeeDao.deleteById(employee2.getId());
+        } catch (Exception e) {
+            //do nothing
+        }
+    }
+
+
+
 }

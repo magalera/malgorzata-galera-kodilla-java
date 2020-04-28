@@ -14,4 +14,7 @@ import java.util.List;
 public interface CompanyDao extends CrudRepository<Company, Integer> {
     @Query(nativeQuery = true)
     List<Company> retrieveCompaniesWhereNameStartsWith(@Param("PREFIX") String namePrefix);
+
+    @Query
+    List<Company> retrieveNameWhereNameContains(@Param("COMPANY_NAME") String anyPartOfTheName);
 }
