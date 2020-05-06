@@ -55,5 +55,3 @@ public class StoredProcTestSuite {
     }
 }
 
-//przygotuj nowy test o nazwie testUpdateBestsellers.
-//W teście sprawdź działanie procedury składowanej UpdateBestsellers().
