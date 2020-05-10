@@ -23,7 +23,6 @@ public class CrudAppTestSuite {
         driver = getDriver(FIREFOX);
         driver.get(BASE_URL);
         generator = new Random();
-
     }
 
     @After
@@ -31,8 +30,14 @@ public class CrudAppTestSuite {
         driver.close();
     }
 
-    private String createCrudAppTestTask() {
+    @Test
+    public void shouldCreateTrelloCard() throws InterruptedException {
+        String taskName = createCrudAppTestTask();
+        sendTestTaskToTrello(taskName);
+        deleteTaskAppTestTask(taskName);
+    }
 
+    private String createCrudAppTestTask() {
         final String XPATH_TASK_NAME = "//form[contains(@action, \"createTask\")]/fieldset[1]/input";
         final String XPATH_TASK_CONTENT = "//form[contains(@action, \"createTask\")]/fieldset[2]/textarea";
         final String XPATH_BUTTON_ADD = "//form[contains(@action, \"createTask\")]/fieldset[3]/button";
@@ -62,9 +67,6 @@ public class CrudAppTestSuite {
                                 .getText().equals(taskName))
                 .limit(1)
                 .forEach(theForm -> {
-                    System.out.println(theForm.getLocation());
-                    System.out.println(taskName);
-                    System.out.println(theForm);
                     WebElement selectElement = theForm.findElement(By.xpath(".//select[1]"));
                     Select select = new Select(selectElement);
                     select.selectByIndex(1);
@@ -73,14 +75,22 @@ public class CrudAppTestSuite {
                             theForm.findElement(By.xpath(".//button[contains(@class, \"card-creation\")]"));
                     buttonCreateCard.click();
                 });
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
         driver.switchTo().alert().accept();
     }
 
-    @Test
-    public void shouldCreateTrelloCard() throws InterruptedException {
-        String taskName = createCrudAppTestTask();
-        sendTestTaskToTrello(taskName);
+    private void deleteTaskAppTestTask(String taskName) {
+        while (!driver.findElement(By.xpath("//select[1]")).isDisplayed()) ;
+
+        driver.findElements(By.xpath("//form[@class=\"datatable__row\"]")).stream()
+                .filter(anyForm ->
+                        anyForm.findElement(By.xpath("//p[@class=\"datatable__field-value\"]"))
+                                .getText().equals(taskName))
+                .forEach(theForm -> {
+                    WebElement buttonCreateCard =
+                            theForm.findElement(By.xpath("//button[@data-task-delete-button=\"\"]"));
+                    buttonCreateCard.click();
+                });
     }
 }
