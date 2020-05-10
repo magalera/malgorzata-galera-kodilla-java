@@ -49,7 +49,6 @@ public class CrudAppTestSuite {
         buttonAddTask.click();
 
         return taskName;
-
     }
 
     private void sendTestTaskToTrello(String taskName) throws InterruptedException {
@@ -57,11 +56,15 @@ public class CrudAppTestSuite {
 
         while (!driver.findElement(By.xpath("//select[1]")).isDisplayed()) ;
 
-        driver.findElements(By.xpath("//form[@class=\"datatable_row\"]")).stream()
+        driver.findElements(By.xpath("//form[@class=\"datatable__row\"]")).stream()
                 .filter(anyForm ->
-                        anyForm.findElement(By.xpath("//p[@class=\"datatable_field-value\"]"))
+                        anyForm.findElement(By.xpath("//p[@class=\"datatable__field-value\"]"))
                                 .getText().equals(taskName))
+                .limit(1)
                 .forEach(theForm -> {
+                    System.out.println(theForm.getLocation());
+                    System.out.println(taskName);
+                    System.out.println(theForm);
                     WebElement selectElement = theForm.findElement(By.xpath(".//select[1]"));
                     Select select = new Select(selectElement);
                     select.selectByIndex(1);
@@ -70,7 +73,9 @@ public class CrudAppTestSuite {
                             theForm.findElement(By.xpath(".//button[contains(@class, \"card-creation\")]"));
                     buttonCreateCard.click();
                 });
-        Thread.sleep(5000);
+        Thread.sleep(10000);
+
+        driver.switchTo().alert().accept();
     }
 
     @Test
